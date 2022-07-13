@@ -40,7 +40,8 @@ public class SwaggerDocket {
 
     protected Predicate<RequestHandler> buildApiRequestHandler() {
         if (!CollectionUtils.isEmpty(config.getBaseApiPackages())) {
-            System.out.println("Building api request handler from base packages: " + config.getBaseApiPackages().toString());
+            System.out.println(
+                    "Building api request handler from base packages: " + config.getBaseApiPackages().toString());
             return buildBasePackageRequestHandler(config.getBaseApiPackages());
         }
 
@@ -50,25 +51,26 @@ public class SwaggerDocket {
 
     protected Predicate<RequestHandler> buildBasePackageRequestHandler(final Collection<String> baseApiPackages) {
         return baseApiPackages
-            .stream()
-            .reduce(
-                null,
-                (Predicate<RequestHandler> handler, String baseApiPackage) -> {
-                    final Predicate<RequestHandler> predicate = RequestHandlerSelectors.basePackage(baseApiPackage)::apply;
+                .stream()
+                .reduce(
+                        null,
+                        (Predicate<RequestHandler> handler, String baseApiPackage) -> {
+                            final Predicate<RequestHandler> predicate = RequestHandlerSelectors
+                                    .basePackage(baseApiPackage)::apply;
 
-                    if (handler == null) {
-                        return predicate;
-                    } else {
-                        return handler.or(predicate);
-                    }
-                },
-                (handler, predicate) -> {
-                    if (handler == null) {
-                        return predicate;
-                    } else {
-                        return handler.or(predicate);
-                    }
-                });
+                            if (handler == null) {
+                                return predicate;
+                            } else {
+                                return handler.or(predicate);
+                            }
+                        },
+                        (handler, predicate) -> {
+                            if (handler == null) {
+                                return predicate;
+                            } else {
+                                return handler.or(predicate);
+                            }
+                        });
     }
 
     protected Predicate<String> buildPathSelector() {
@@ -81,25 +83,25 @@ public class SwaggerDocket {
 
     protected java.util.function.Predicate<String> buildPathSelectorHandler(final Collection<String> pathRegExValues) {
         return pathRegExValues
-            .stream()
-            .reduce(
-                null,
-                (Predicate<String> handler, String pathRegEx) -> {
-                    final Predicate<String> predicate = (String input) -> input.matches(pathRegEx);
+                .stream()
+                .reduce(
+                        null,
+                        (Predicate<String> handler, String pathRegEx) -> {
+                            final Predicate<String> predicate = (String input) -> input.matches(pathRegEx);
 
-                    if (handler == null) {
-                        return predicate;
-                    } else {
-                        return handler.or(predicate);
-                    }
-                },
-                (handler, predicate) -> {
-                    if (handler == null) {
-                        return predicate;
-                    } else {
-                        return handler.or(predicate);
-                    }
-                });
+                            if (handler == null) {
+                                return predicate;
+                            } else {
+                                return handler.or(predicate);
+                            }
+                        },
+                        (handler, predicate) -> {
+                            if (handler == null) {
+                                return predicate;
+                            } else {
+                                return handler.or(predicate);
+                            }
+                        });
     }
 
     protected ApiInfo buildApiInfo() {
